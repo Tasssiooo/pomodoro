@@ -1,0 +1,24 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header sr-only">
+        <h3 class="modal-title" id="myModalLabel">Create a new todo</h3>
+      </div>
+      <%= form_with model: @todo do |form| %>
+        <div class="modal-body">
+          <%= form.label :title, class: "sr-only" %>
+          <%= form.text_field :title, placeholder: "Todo name", class: "title-setter" %>
+
+          <%= form.label :description, class: "sr-only" %>
+          <%= form.text_field :description, placeholder: "Todo description", class: "description-setter" %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="filled" id="cancel" data-dismiss="modal">
+            Cancel
+          </button>
+          <%= form.submit value: 'Add todo', class: "filled", style: "background-color: rgb(var(--primary));" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

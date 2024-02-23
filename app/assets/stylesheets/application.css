@@ -1,15 +1,327 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
+:root {
+  --background: 36, 36, 36;
+  --background-dark: 26, 26, 26;
+
+  --foreground: 255, 255, 255;
+
+  --primary: 214, 55, 25;
+  --primary-light: 231, 78, 48;
+
+  --secondary: 7, 125, 8;
+  --secondary-light: 11, 163, 6;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+  }
+
+  html {
+    font-family: "Space Mono", monospace, system-ui, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+
+    color-scheme: light dark;
+    color: rgb(var(--foreground));
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html,body {
+    background-color: rgb(var(--background));
+    height: 100%;
+  }
+
+  h1 {
+    font-size: 5rem;
+  }
+  h2 {
+    font-size: 1rem;
+  }
+
+  main {
+    padding: 0 2rem;
+    margin: 0 auto;
+    max-width: 768px;
+  }
+
+  input[type="submit"], button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+
+    font-size: 1rem;
+    cursor: pointer;
+
+    padding: 0.5rem;
+    border: 0;
+    border-radius: 0.2rem;
+    outline: 0;
+    background: none;
+  }
+}
+
+@layer variants {
+  button.text {
+    color: rgb(var(--primary));
+    transition: color, background-color 150ms ease-in;
+    padding-right: 0.9rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+  button.text:hover {
+    color: rgb(var(--primary-light));
+    background-color: rgba(var(--primary-light), 0.1);
+  }
+  
+  button.icon {
+    color: rgb(var(--primary));
+    transition: color, background-color 150ms ease-in;
+  }
+  button.icon:hover {
+    background-color: rgba(var(--primary-light), 0.1);
+  }
+
+  input[type="submit"].filled, button.filled {
+    color: rgb(var(--foreground));
+    font-weight: 600;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+    background-color: rgb(var(--background-dark));
+  }
+}
+
+header {
+  padding: 2rem 1rem;
+  text-align: center;
+}
+header p {
+  margin: 1rem auto;
+  max-width: 640px;
+}
+header p span {
+  font-size: 0.25rem;
+}
+
+div[role="group"] {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+div.todo-list {
+  background-color: rgb(var(--background-dark));
+  border-radius: 0.2rem;
+}
+div.todo-list ul {
+  list-style: none;
+  padding: 8px 0;
+  position: relative;
+  width: 100%;
+  margin-top: 1rem;
+}
+div.todo-list li {
+  display: flex;
+  -moz-box-pack: start;
+  justify-content: flex-start;
+  -moz-box-align: center;
+  align-items: center;
+  position: relative;
+  text-decoration: none;
+  width: 100%;
+  text-align: left;
+  padding: 8px 16px;
+}
+div.todo-list .todo-content {
+  flex: 1 1 auto;
+  margin: 0 6px;
+  margin-left: 12px;
+}
+div.todo-list .todo-checkbox {
+  display: inline-flex;
+  -moz-box-align: center;
+  align-items: center;
+  -moz-box-pack: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  background-color: transparent;
+  outline: 0px;
+  border: 0px;
+  margin: 0px;
+  cursor: pointer;
+  user-select: none;
+  appearance: none;
+  text-decoration: none;
+  padding: 9px;
+  border-radius: 50%;
+  color: rgba(var(--foreground), 0.7);
+}
+div.todo-list .todo-checkbox:has(input:checked) {
+  color: rgb(var(--secondary));
+}
+div.todo-list .todo-checkbox:has(input:checked) + .todo-content > * {
+  color: rgb(var(--secondary-light), 0.5);
+  text-decoration-line: line-through;
+}
+div.todo-list .todo-checkbox-input {
+  cursor: inherit;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+}
+div.todo-list .todo-checkbox-svg {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  fill: currentColor;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+div.todo-listt .todo-checkbox-ripple {
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+  inset: 0px;
+  border-radius: inherit;
+}
+div.todo-list .todo-title {
+  letter-spacing: 0.00938rem;
+  display: block;
+}
+div.todo-list .todo-description {
+  font-size: 0.75rem;
+  letter-spacing: 0.01071rem;
+  color: rgba(var(--foreground), 0.7);
+  display: block;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  overflow: hidden;
+  background-color: rgba(var(--background), 0.5);
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+.modal-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 512px;
+  margin: 0.5rem;
+  pointer-events: none;
+}
+.modal-content {
+  position: relative;
+  width: 100%;
+  pointer-events: auto;
+  background-color: rgb(var(--background));
+  background-clip: padding-box;
+  border: 1px solid rgb(var(--primary));
+  border-radius: 0.5rem;
+  outline: 0;
+}
+.modal-header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  padding: 1rem;
+}
+.modal-title {
+  margin-bottom: 0;
+}
+.modal-body {
+  position: relative;
+  flex: 1 1 auto;
+
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+.modal-body input[type="text"] {
+  padding: 0.3rem;
+  border: 0;
+  margin: 0;
+  outline: 0;
+  background: none;
+}
+.modal-body .title-setter {
+  font-size: 1.5rem;
+}
+.modal-body .description-setter {
+  font-size: 0.8rem;
+}
+.modal-footer {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1rem;
+  border-top: 1px solid rgb(var(--primary));
+}
+.modal-footer > * + * {
+  margin-left: 1rem;
+}
+
+.sr-only {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+  clip: rect(1px 1px 1px 1px);
+  /* maybe deprecated but we need to support legacy browsers */
+  clip: rect(1px, 1px, 1px, 1px);
+  /* modern browsers, clip-path works inwards from each corner */
+  clip-path: inset(50%);
+  /* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 450px) {
+  h1 {
+    font-size: 3.5rem;
+  }
+  p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background-color: #ffffff;
+    --font-color: #213547;
+  }
+}

@@ -1,2 +1,63 @@
-<h1>Todo#index</h1>
-<p>Find me in app/views/todo/index.html.erb</p>
+<header>
+  <h1>🍅Pomodoro</h1>
+  <p>
+    This to-do list web app is simple and efficient at what it is proposed
+    to do.
+    <br/>
+    <span>
+      Or it is just the creator&apos;s excuse to practice his programming
+      skills...
+    </span>
+  </p>
+</header>
+
+<main>
+  <%= render 'modal' %>
+
+  <div role="group">
+    <button type="button" id="add" class="text" onclick="openModal">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" aria-hidden="true" viewBox="0 0 24 24">
+	      <path fill="currentColor" d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2" />
+      </svg>
+      Add todo
+    </button>
+
+    <div>
+      <button type="button" class="icon" aria-label="Change view mode to grid">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" aria-hidden="true" viewBox="0 0 24 24">
+	        <path fill="currentColor" d="M3 11h8V3H3m2 2h4v4H5m8 12h8v-8h-8m2 2h4v4h-4M3 21h8v-8H3m2 2h4v4H5m8-16v8h8V3m-2 6h-4V5h4Z" />
+        </svg>
+      </button>
+      <button type="button" class="icon" aria-label="Sort">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" aria-hidden="true" viewBox="0 0 24 24">
+	        <path fill="currentColor" d="m18 21l-4-4h3V7h-3l4-4l4 4h-3v10h3M2 19v-2h10v2M2 13v-2h7v2M2 7V5h4v2z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="todo-list">
+    <ul>
+      <% @todos.each do |todo|  %>
+        <li>
+          <span class="todo-checkbox">
+            <input type="checkbox" name="check" class="todo-checkbox-input" data-indeterminate="false" aria-label="Check todo" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" focusable="false" aria-hidden="true" class="todo-checkbox-svg" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="8" fill="currentColor" opacity="0.3" />
+              <path fill="currentColor" d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10s10-4.47 10-10S17.53 2 12 2m0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8s8 3.58 8 8s-3.58 8-8 8" />
+            </svg>
+            <span class="todo-checkbox-ripple"></span>
+          </span>
+          <div class="todo-content">
+            <h2 class="todo-title">
+              <%= todo.title %>
+            </h2>
+            <p class="todo-description">
+              <%= todo.description %>
+            </p>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</main>
