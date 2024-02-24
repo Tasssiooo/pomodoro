@@ -19,5 +19,17 @@
 
   <body>
     <%= yield %>
+
+    <div
+      class="modal"
+      id="myModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modal-label"
+      data-controller="modal"
+      data-action="turbo:frame-load->modal#open turbo:submit-end->modal#close"
+    >
+      <%= turbo_frame_tag "modal" %>
+    </div>
   </body>
 </html>
